@@ -1,0 +1,75 @@
+{
+  "actions": [],
+  "creation": "2026-03-14 12:00:00.000000",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "field_order": [
+    "scheduled_date",
+    "scheduled_amount",
+    "actual_amount",
+    "status",
+    "donation",
+    "paid_date",
+    "reminder_count"
+  ],
+  "fields": [
+    {
+      "fieldname": "scheduled_date",
+      "fieldtype": "Date",
+      "in_list_view": 1,
+      "label": "Scheduled Date",
+      "reqd": 1
+    },
+    {
+      "fieldname": "scheduled_amount",
+      "fieldtype": "Currency",
+      "in_list_view": 1,
+      "label": "Scheduled Amount",
+      "reqd": 1
+    },
+    {
+      "fieldname": "actual_amount",
+      "fieldtype": "Currency",
+      "label": "Actual Amount"
+    },
+    {
+      "default": "Pending",
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "label": "Status",
+      "options": "Pending\nPaid\nOverdue\nCancelled",
+      "reqd": 1
+    },
+    {
+      "fieldname": "donation",
+      "fieldtype": "Link",
+      "label": "Donation",
+      "options": "Donation"
+    },
+    {
+      "fieldname": "paid_date",
+      "fieldtype": "Date",
+      "label": "Paid Date"
+    },
+    {
+      "default": "0",
+      "fieldname": "reminder_count",
+      "fieldtype": "Int",
+      "label": "Reminder Count"
+    }
+  ],
+  "index_web_pages_for_search": 1,
+  "istable": 1,
+  "links": [],
+  "modified": "2026-03-14 12:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "Church MRM",
+  "name": "Pledge Payment Schedule",
+  "owner": "Administrator",
+  "permissions": [],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": [],
+  "track_changes": 1
+}

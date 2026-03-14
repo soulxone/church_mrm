@@ -1,0 +1,142 @@
+{
+  "actions": [],
+  "autoname": "field:type_name",
+  "creation": "2026-03-14 12:00:00.000000",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "field_order": [
+    "type_name",
+    "title",
+    "description",
+    "section_break_duration",
+    "duration_interval",
+    "duration_unit",
+    "column_break_1",
+    "period_type",
+    "fixed_period_start_day",
+    "section_break_fees",
+    "minimum_fee",
+    "auto_renew",
+    "is_active",
+    "sort_order"
+  ],
+  "fields": [
+    {
+      "fieldname": "type_name",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Name",
+      "reqd": 1,
+      "unique": 1
+    },
+    {
+      "fieldname": "title",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Display Title",
+      "reqd": 1
+    },
+    {
+      "fieldname": "description",
+      "fieldtype": "Small Text",
+      "label": "Description"
+    },
+    {
+      "fieldname": "section_break_duration",
+      "fieldtype": "Section Break",
+      "label": "Duration"
+    },
+    {
+      "default": "1",
+      "fieldname": "duration_interval",
+      "fieldtype": "Int",
+      "label": "Duration Interval",
+      "reqd": 1
+    },
+    {
+      "default": "Year",
+      "fieldname": "duration_unit",
+      "fieldtype": "Select",
+      "label": "Duration Unit",
+      "options": "Day\nMonth\nYear",
+      "reqd": 1
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "default": "Rolling",
+      "fieldname": "period_type",
+      "fieldtype": "Select",
+      "label": "Period Type",
+      "options": "Rolling\nFixed",
+      "reqd": 1
+    },
+    {
+      "depends_on": "eval:doc.period_type=='Fixed'",
+      "fieldname": "fixed_period_start_day",
+      "fieldtype": "Data",
+      "label": "Fixed Period Start (MMDD)"
+    },
+    {
+      "fieldname": "section_break_fees",
+      "fieldtype": "Section Break",
+      "label": "Fees"
+    },
+    {
+      "default": "0",
+      "fieldname": "minimum_fee",
+      "fieldtype": "Currency",
+      "label": "Minimum Fee"
+    },
+    {
+      "default": "No",
+      "fieldname": "auto_renew",
+      "fieldtype": "Select",
+      "label": "Auto Renew",
+      "options": "No\nOptional\nRequired"
+    },
+    {
+      "default": "1",
+      "fieldname": "is_active",
+      "fieldtype": "Check",
+      "label": "Active"
+    },
+    {
+      "fieldname": "sort_order",
+      "fieldtype": "Int",
+      "label": "Sort Order"
+    }
+  ],
+  "index_web_pages_for_search": 1,
+  "links": [],
+  "modified": "2026-03-14 12:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "Church MRM",
+  "name": "Membership Type",
+  "naming_rule": "By fieldname",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "read": 1,
+      "role": "All"
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": [],
+  "track_changes": 1
+}

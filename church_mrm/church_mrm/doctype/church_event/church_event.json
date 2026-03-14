@@ -1,0 +1,227 @@
+{
+  "actions": [],
+  "autoname": "field:event_name",
+  "creation": "2026-03-14 12:00:00.000000",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "field_order": [
+    "event_name",
+    "event_type",
+    "schedule_section",
+    "start_date",
+    "end_date",
+    "column_break_1",
+    "is_recurring",
+    "details_section",
+    "summary",
+    "description",
+    "image",
+    "location_section",
+    "venue",
+    "is_online",
+    "online_meeting_url",
+    "registration_section",
+    "is_registration_open",
+    "max_participants",
+    "fees_section",
+    "is_paid_event",
+    "fee_amount",
+    "donation_type",
+    "status_section",
+    "status",
+    "is_public",
+    "campaign",
+    "participants_section",
+    "participants"
+  ],
+  "fields": [
+    {
+      "fieldname": "event_name",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Event Name",
+      "reqd": 1,
+      "unique": 1
+    },
+    {
+      "fieldname": "event_type",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "label": "Event Type",
+      "options": "Sunday Service\nBible Study\nConference\nWorkshop\nRetreat\nFellowship\nYouth Event\nOutreach\nFundraiser\nOther",
+      "reqd": 1
+    },
+    {
+      "fieldname": "schedule_section",
+      "fieldtype": "Section Break",
+      "label": "Schedule"
+    },
+    {
+      "fieldname": "start_date",
+      "fieldtype": "Datetime",
+      "in_list_view": 1,
+      "label": "Start Date",
+      "reqd": 1
+    },
+    {
+      "fieldname": "end_date",
+      "fieldtype": "Datetime",
+      "label": "End Date"
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "is_recurring",
+      "fieldtype": "Check",
+      "default": "0",
+      "label": "Is Recurring"
+    },
+    {
+      "fieldname": "details_section",
+      "fieldtype": "Section Break",
+      "label": "Details"
+    },
+    {
+      "fieldname": "summary",
+      "fieldtype": "Small Text",
+      "label": "Summary"
+    },
+    {
+      "fieldname": "description",
+      "fieldtype": "Text Editor",
+      "label": "Description"
+    },
+    {
+      "fieldname": "image",
+      "fieldtype": "Attach Image",
+      "label": "Image"
+    },
+    {
+      "fieldname": "location_section",
+      "fieldtype": "Section Break",
+      "label": "Location"
+    },
+    {
+      "fieldname": "venue",
+      "fieldtype": "Data",
+      "label": "Venue"
+    },
+    {
+      "fieldname": "is_online",
+      "fieldtype": "Check",
+      "default": "0",
+      "label": "Is Online"
+    },
+    {
+      "fieldname": "online_meeting_url",
+      "fieldtype": "Data",
+      "depends_on": "eval:doc.is_online",
+      "label": "Online Meeting URL"
+    },
+    {
+      "fieldname": "registration_section",
+      "fieldtype": "Section Break",
+      "label": "Registration"
+    },
+    {
+      "fieldname": "is_registration_open",
+      "fieldtype": "Check",
+      "default": "0",
+      "label": "Is Registration Open"
+    },
+    {
+      "fieldname": "max_participants",
+      "fieldtype": "Int",
+      "label": "Max Participants"
+    },
+    {
+      "fieldname": "fees_section",
+      "fieldtype": "Section Break",
+      "label": "Fees"
+    },
+    {
+      "fieldname": "is_paid_event",
+      "fieldtype": "Check",
+      "default": "0",
+      "label": "Is Paid Event"
+    },
+    {
+      "fieldname": "fee_amount",
+      "fieldtype": "Currency",
+      "depends_on": "eval:doc.is_paid_event",
+      "label": "Fee Amount"
+    },
+    {
+      "fieldname": "donation_type",
+      "fieldtype": "Link",
+      "label": "Donation Type",
+      "options": "Donation Type"
+    },
+    {
+      "fieldname": "status_section",
+      "fieldtype": "Section Break",
+      "label": "Status"
+    },
+    {
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "default": "Planned",
+      "in_list_view": 1,
+      "label": "Status",
+      "options": "Planned\nActive\nCompleted\nCancelled",
+      "reqd": 1
+    },
+    {
+      "fieldname": "is_public",
+      "fieldtype": "Check",
+      "default": "1",
+      "label": "Is Public"
+    },
+    {
+      "fieldname": "campaign",
+      "fieldtype": "Link",
+      "label": "Campaign",
+      "options": "Campaign"
+    },
+    {
+      "fieldname": "participants_section",
+      "fieldtype": "Section Break",
+      "label": "Participants"
+    },
+    {
+      "fieldname": "participants",
+      "fieldtype": "Table",
+      "label": "Participants",
+      "options": "Event Participant"
+    }
+  ],
+  "image_field": "image",
+  "index_web_pages_for_search": 1,
+  "links": [],
+  "modified": "2026-03-14 12:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "Church MRM",
+  "name": "Church Event",
+  "naming_rule": "By fieldname",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": [],
+  "track_changes": 1
+}

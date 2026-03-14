@@ -1,0 +1,304 @@
+{
+  "actions": [],
+  "allow_rename": 1,
+  "creation": "2026-03-14 12:00:00.000000",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "field_order": [
+    "personal_information_section",
+    "first_name",
+    "middle_name",
+    "last_name",
+    "full_name",
+    "column_break_1",
+    "salutation",
+    "gender",
+    "date_of_birth",
+    "image",
+    "contact_link_section",
+    "contact",
+    "user",
+    "church_details_section",
+    "member_id",
+    "member_since",
+    "membership_type",
+    "membership_status",
+    "column_break_2",
+    "baptism_date",
+    "confirmation_date",
+    "wedding_anniversary",
+    "household_section",
+    "household_name",
+    "household_role",
+    "household_members",
+    "communication_section",
+    "email_address",
+    "phone",
+    "mobile",
+    "column_break_3",
+    "do_not_email",
+    "do_not_phone",
+    "do_not_mail",
+    "do_not_sms",
+    "preferred_communication",
+    "notes_section",
+    "notes",
+    "is_deceased",
+    "deceased_date"
+  ],
+  "fields": [
+    {
+      "fieldname": "personal_information_section",
+      "fieldtype": "Section Break",
+      "label": "Personal Information"
+    },
+    {
+      "fieldname": "first_name",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "First Name",
+      "reqd": 1
+    },
+    {
+      "fieldname": "middle_name",
+      "fieldtype": "Data",
+      "label": "Middle Name"
+    },
+    {
+      "fieldname": "last_name",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Last Name",
+      "reqd": 1
+    },
+    {
+      "fieldname": "full_name",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Full Name",
+      "read_only": 1
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "salutation",
+      "fieldtype": "Link",
+      "label": "Salutation",
+      "options": "Salutation"
+    },
+    {
+      "fieldname": "gender",
+      "fieldtype": "Link",
+      "label": "Gender",
+      "options": "Gender"
+    },
+    {
+      "fieldname": "date_of_birth",
+      "fieldtype": "Date",
+      "label": "Date of Birth"
+    },
+    {
+      "fieldname": "image",
+      "fieldtype": "Attach Image",
+      "label": "Photo"
+    },
+    {
+      "fieldname": "contact_link_section",
+      "fieldtype": "Section Break",
+      "label": "Contact Link"
+    },
+    {
+      "fieldname": "contact",
+      "fieldtype": "Link",
+      "label": "Frappe Contact",
+      "options": "Contact",
+      "read_only": 1
+    },
+    {
+      "fieldname": "user",
+      "fieldtype": "Link",
+      "label": "User Account",
+      "options": "User"
+    },
+    {
+      "fieldname": "church_details_section",
+      "fieldtype": "Section Break",
+      "label": "Church Details"
+    },
+    {
+      "fieldname": "member_id",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Member ID",
+      "read_only": 1
+    },
+    {
+      "fieldname": "member_since",
+      "fieldtype": "Date",
+      "label": "Member Since"
+    },
+    {
+      "fieldname": "membership_type",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Membership Type",
+      "options": "Membership Type"
+    },
+    {
+      "fieldname": "membership_status",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "label": "Membership Status",
+      "options": "\nNew\nCurrent\nGrace\nExpired\nDeceased"
+    },
+    {
+      "fieldname": "column_break_2",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "baptism_date",
+      "fieldtype": "Date",
+      "label": "Baptism Date"
+    },
+    {
+      "fieldname": "confirmation_date",
+      "fieldtype": "Date",
+      "label": "Confirmation Date"
+    },
+    {
+      "fieldname": "wedding_anniversary",
+      "fieldtype": "Date",
+      "label": "Wedding Anniversary"
+    },
+    {
+      "fieldname": "household_section",
+      "fieldtype": "Section Break",
+      "label": "Household"
+    },
+    {
+      "fieldname": "household_name",
+      "fieldtype": "Data",
+      "label": "Household/Family Name"
+    },
+    {
+      "fieldname": "household_role",
+      "fieldtype": "Select",
+      "label": "Role in Household",
+      "options": "\nHead\nSpouse\nChild\nOther"
+    },
+    {
+      "fieldname": "household_members",
+      "fieldtype": "Table",
+      "label": "Family Members",
+      "options": "Church Member Household"
+    },
+    {
+      "fieldname": "communication_section",
+      "fieldtype": "Section Break",
+      "label": "Communication"
+    },
+    {
+      "fieldname": "email_address",
+      "fieldtype": "Data",
+      "label": "Primary Email",
+      "options": "Email"
+    },
+    {
+      "fieldname": "phone",
+      "fieldtype": "Data",
+      "label": "Phone",
+      "options": "Phone"
+    },
+    {
+      "fieldname": "mobile",
+      "fieldtype": "Data",
+      "label": "Mobile",
+      "options": "Phone"
+    },
+    {
+      "fieldname": "column_break_3",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "do_not_email",
+      "fieldtype": "Check",
+      "default": "0",
+      "label": "Do Not Email"
+    },
+    {
+      "fieldname": "do_not_phone",
+      "fieldtype": "Check",
+      "default": "0",
+      "label": "Do Not Phone"
+    },
+    {
+      "fieldname": "do_not_mail",
+      "fieldtype": "Check",
+      "default": "0",
+      "label": "Do Not Mail"
+    },
+    {
+      "fieldname": "do_not_sms",
+      "fieldtype": "Check",
+      "default": "0",
+      "label": "Do Not SMS"
+    },
+    {
+      "fieldname": "preferred_communication",
+      "fieldtype": "Select",
+      "label": "Preferred Communication",
+      "options": "\nEmail\nPhone\nSMS\nMail"
+    },
+    {
+      "fieldname": "notes_section",
+      "fieldtype": "Section Break",
+      "label": "Notes"
+    },
+    {
+      "fieldname": "notes",
+      "fieldtype": "Text Editor",
+      "label": "Notes"
+    },
+    {
+      "fieldname": "is_deceased",
+      "fieldtype": "Check",
+      "default": "0",
+      "label": "Is Deceased"
+    },
+    {
+      "fieldname": "deceased_date",
+      "fieldtype": "Date",
+      "depends_on": "eval:doc.is_deceased",
+      "label": "Deceased Date"
+    }
+  ],
+  "image_field": "image",
+  "index_web_pages_for_search": 1,
+  "links": [],
+  "modified": "2026-03-14 12:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "Church MRM",
+  "name": "Church Member",
+  "naming_rule": "By script",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": [],
+  "track_changes": 1
+}

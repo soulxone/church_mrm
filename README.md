@@ -1,6 +1,6 @@
-# Church CRM
+# Church MRM
 
-Church CRM is a Frappe/ERPNext custom app for nonprofit church management, inspired by CiviCRM.
+Church MRM is a Frappe/ERPNext custom app for nonprofit church management, inspired by CiviCRM.
 
 ## Features
 
@@ -15,8 +15,8 @@ Church CRM is a Frappe/ERPNext custom app for nonprofit church management, inspi
 ## Installation
 
 ```bash
-bench get-app https://github.com/YOUR_USER/church_crm
-bench --site your-site install-app church_crm
+bench get-app https://github.com/YOUR_USER/church_mrm
+bench --site your-site install-app church_mrm
 ```
 
 ## License

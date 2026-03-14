@@ -1,0 +1,261 @@
+{
+  "actions": [],
+  "creation": "2026-03-14 12:00:00.000000",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "field_order": [
+    "naming_series",
+    "donor_information_section",
+    "church_member",
+    "donor_name",
+    "contact",
+    "column_break_1",
+    "donation_date",
+    "company",
+    "donation_details_section",
+    "donation_type",
+    "amount",
+    "currency",
+    "column_break_2",
+    "payment_method",
+    "check_number",
+    "transaction_id",
+    "tax_deductibility_section",
+    "is_tax_deductible",
+    "non_deductible_amount",
+    "source_campaign_section",
+    "source",
+    "campaign",
+    "pledge",
+    "recurring_section",
+    "is_recurring",
+    "recurring_frequency",
+    "accounting_section",
+    "journal_entry",
+    "notes_section",
+    "notes",
+    "amended_from"
+  ],
+  "fields": [
+    {
+      "fieldname": "naming_series",
+      "fieldtype": "Select",
+      "label": "Naming Series",
+      "options": "DON-.YYYY.-.#####",
+      "reqd": 1,
+      "default": "DON-.YYYY.-.#####"
+    },
+    {
+      "fieldname": "donor_information_section",
+      "fieldtype": "Section Break",
+      "label": "Donor Information"
+    },
+    {
+      "fieldname": "church_member",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Church Member",
+      "options": "Church Member"
+    },
+    {
+      "fieldname": "donor_name",
+      "fieldtype": "Data",
+      "fetch_from": "church_member.full_name",
+      "in_list_view": 1,
+      "label": "Donor Name",
+      "read_only": 1
+    },
+    {
+      "fieldname": "contact",
+      "fieldtype": "Link",
+      "label": "Contact (Non-Member)",
+      "options": "Contact"
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "donation_date",
+      "fieldtype": "Date",
+      "default": "Today",
+      "in_list_view": 1,
+      "label": "Donation Date",
+      "reqd": 1
+    },
+    {
+      "fieldname": "company",
+      "fieldtype": "Link",
+      "label": "Company",
+      "options": "Company",
+      "reqd": 1
+    },
+    {
+      "fieldname": "donation_details_section",
+      "fieldtype": "Section Break",
+      "label": "Donation Details"
+    },
+    {
+      "fieldname": "donation_type",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Donation Type",
+      "options": "Donation Type",
+      "reqd": 1
+    },
+    {
+      "fieldname": "amount",
+      "fieldtype": "Currency",
+      "in_list_view": 1,
+      "label": "Amount",
+      "reqd": 1
+    },
+    {
+      "fieldname": "currency",
+      "fieldtype": "Link",
+      "default": "USD",
+      "label": "Currency",
+      "options": "Currency",
+      "reqd": 1
+    },
+    {
+      "fieldname": "column_break_2",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "payment_method",
+      "fieldtype": "Select",
+      "label": "Payment Method",
+      "options": "\nCash\nCheck\nCredit Card\nBank Transfer\nOnline\nMobile\nOther",
+      "reqd": 1
+    },
+    {
+      "fieldname": "check_number",
+      "fieldtype": "Data",
+      "depends_on": "eval:doc.payment_method=='Check'",
+      "label": "Check Number"
+    },
+    {
+      "fieldname": "transaction_id",
+      "fieldtype": "Data",
+      "label": "Transaction ID"
+    },
+    {
+      "fieldname": "tax_deductibility_section",
+      "fieldtype": "Section Break",
+      "label": "Tax & Deductibility"
+    },
+    {
+      "fieldname": "is_tax_deductible",
+      "fieldtype": "Check",
+      "default": "1",
+      "label": "Is Tax Deductible"
+    },
+    {
+      "fieldname": "non_deductible_amount",
+      "fieldtype": "Currency",
+      "default": "0",
+      "label": "Non Deductible Amount"
+    },
+    {
+      "fieldname": "source_campaign_section",
+      "fieldtype": "Section Break",
+      "label": "Source & Campaign"
+    },
+    {
+      "fieldname": "source",
+      "fieldtype": "Data",
+      "label": "Source"
+    },
+    {
+      "fieldname": "campaign",
+      "fieldtype": "Link",
+      "label": "Campaign",
+      "options": "Campaign"
+    },
+    {
+      "fieldname": "pledge",
+      "fieldtype": "Link",
+      "label": "Pledge",
+      "options": "Pledge"
+    },
+    {
+      "fieldname": "recurring_section",
+      "fieldtype": "Section Break",
+      "label": "Recurring"
+    },
+    {
+      "fieldname": "is_recurring",
+      "fieldtype": "Check",
+      "default": "0",
+      "label": "Is Recurring"
+    },
+    {
+      "fieldname": "recurring_frequency",
+      "fieldtype": "Select",
+      "depends_on": "eval:doc.is_recurring",
+      "label": "Recurring Frequency",
+      "options": "\nWeekly\nBi-Weekly\nMonthly\nQuarterly\nAnnually"
+    },
+    {
+      "fieldname": "accounting_section",
+      "fieldtype": "Section Break",
+      "label": "Accounting"
+    },
+    {
+      "fieldname": "journal_entry",
+      "fieldtype": "Link",
+      "label": "Journal Entry",
+      "options": "Journal Entry",
+      "read_only": 1
+    },
+    {
+      "fieldname": "notes_section",
+      "fieldtype": "Section Break",
+      "label": "Notes"
+    },
+    {
+      "fieldname": "notes",
+      "fieldtype": "Small Text",
+      "label": "Notes"
+    },
+    {
+      "fieldname": "amended_from",
+      "fieldtype": "Link",
+      "label": "Amended From",
+      "no_copy": 1,
+      "options": "Donation",
+      "read_only": 1
+    }
+  ],
+  "index_web_pages_for_search": 1,
+  "is_submittable": 1,
+  "links": [],
+  "modified": "2026-03-14 12:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "Church MRM",
+  "name": "Donation",
+  "naming_rule": "By \"Naming Series\" field",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "amend": 1,
+      "cancel": 1,
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "submit": 1,
+      "write": 1
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": [],
+  "track_changes": 1
+}

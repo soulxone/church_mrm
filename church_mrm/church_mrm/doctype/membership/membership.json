@@ -1,0 +1,165 @@
+{
+  "actions": [],
+  "creation": "2026-03-14 12:00:00.000000",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "field_order": [
+    "naming_series",
+    "member_section",
+    "church_member",
+    "member_name",
+    "column_break_1",
+    "membership_type",
+    "status",
+    "dates_section",
+    "join_date",
+    "start_date",
+    "end_date",
+    "column_break_2",
+    "is_override",
+    "override_end_date",
+    "source_section",
+    "source",
+    "related_donation",
+    "amended_from"
+  ],
+  "fields": [
+    {
+      "fieldname": "naming_series",
+      "fieldtype": "Select",
+      "label": "Naming Series",
+      "options": "MEM-.YYYY.-.#####",
+      "reqd": 1
+    },
+    {
+      "fieldname": "member_section",
+      "fieldtype": "Section Break",
+      "label": "Member"
+    },
+    {
+      "fieldname": "church_member",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Church Member",
+      "options": "Church Member",
+      "reqd": 1
+    },
+    {
+      "fieldname": "member_name",
+      "fieldtype": "Data",
+      "fetch_from": "church_member.full_name",
+      "in_list_view": 1,
+      "label": "Member Name",
+      "read_only": 1
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "membership_type",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Membership Type",
+      "options": "Membership Type",
+      "reqd": 1
+    },
+    {
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "default": "New",
+      "in_list_view": 1,
+      "label": "Status",
+      "options": "New\nCurrent\nGrace\nExpired\nCancelled\nDeceased\nPending",
+      "reqd": 1
+    },
+    {
+      "fieldname": "dates_section",
+      "fieldtype": "Section Break",
+      "label": "Dates"
+    },
+    {
+      "fieldname": "join_date",
+      "fieldtype": "Date",
+      "label": "Member Since",
+      "reqd": 1
+    },
+    {
+      "fieldname": "start_date",
+      "fieldtype": "Date",
+      "label": "Current Period Start",
+      "reqd": 1
+    },
+    {
+      "fieldname": "end_date",
+      "fieldtype": "Date",
+      "label": "Current Period End"
+    },
+    {
+      "fieldname": "column_break_2",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "is_override",
+      "fieldtype": "Check",
+      "default": "0",
+      "label": "Manual Status Override"
+    },
+    {
+      "fieldname": "override_end_date",
+      "fieldtype": "Date",
+      "depends_on": "eval:doc.is_override",
+      "label": "Override End Date"
+    },
+    {
+      "fieldname": "source_section",
+      "fieldtype": "Section Break",
+      "label": "Source"
+    },
+    {
+      "fieldname": "source",
+      "fieldtype": "Data",
+      "label": "Source"
+    },
+    {
+      "fieldname": "related_donation",
+      "fieldtype": "Link",
+      "label": "Related Donation",
+      "options": "Donation"
+    },
+    {
+      "fieldname": "amended_from",
+      "fieldtype": "Link",
+      "label": "Amended From",
+      "no_copy": 1,
+      "options": "Membership",
+      "read_only": 1
+    }
+  ],
+  "index_web_pages_for_search": 1,
+  "links": [],
+  "modified": "2026-03-14 12:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "Church MRM",
+  "name": "Membership",
+  "naming_rule": "By \"Naming Series\" field",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": [],
+  "track_changes": 1
+}

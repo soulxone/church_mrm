@@ -1,0 +1,36 @@
+{
+  "allow_roles": [
+    {
+      "role": "System Manager"
+    }
+  ],
+  "creation": "2026-03-14 12:00:00.000000",
+  "doctype": "Module Onboarding",
+  "documentation_url": "https://github.com/soulxone/church_mrm",
+  "is_complete": 0,
+  "modified": "2026-03-14 13:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "Church MRM",
+  "name": "Church MRM Setup",
+  "owner": "Administrator",
+  "steps": [
+    {
+      "step": "Set Up Donation Types"
+    },
+    {
+      "step": "Set Up Membership Types"
+    },
+    {
+      "step": "Create Your First Church Member"
+    },
+    {
+      "step": "Record Your First Donation"
+    },
+    {
+      "step": "Create a Church Event"
+    }
+  ],
+  "subtitle": "Set up your church management system with members, donations, and events.",
+  "success_message": "Your Church MRM is ready! Start managing your congregation.",
+  "title": "Welcome to Church MRM"
+}

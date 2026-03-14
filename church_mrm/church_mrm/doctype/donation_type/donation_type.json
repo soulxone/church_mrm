@@ -1,0 +1,106 @@
+{
+  "actions": [],
+  "allow_rename": 1,
+  "autoname": "field:donation_type_name",
+  "creation": "2026-03-14 12:00:00.000000",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "field_order": [
+    "donation_type_name",
+    "label",
+    "description",
+    "is_tax_deductible",
+    "column_break_1",
+    "income_account",
+    "debit_account",
+    "is_active",
+    "sort_order"
+  ],
+  "fields": [
+    {
+      "fieldname": "donation_type_name",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Name",
+      "reqd": 1,
+      "unique": 1
+    },
+    {
+      "fieldname": "label",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Display Label",
+      "reqd": 1
+    },
+    {
+      "fieldname": "description",
+      "fieldtype": "Small Text",
+      "label": "Description"
+    },
+    {
+      "default": "1",
+      "fieldname": "is_tax_deductible",
+      "fieldtype": "Check",
+      "label": "Tax Deductible by Default"
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "income_account",
+      "fieldtype": "Link",
+      "label": "Income Account",
+      "options": "Account",
+      "reqd": 1
+    },
+    {
+      "fieldname": "debit_account",
+      "fieldtype": "Link",
+      "label": "Default Debit Account",
+      "options": "Account",
+      "reqd": 1
+    },
+    {
+      "default": "1",
+      "fieldname": "is_active",
+      "fieldtype": "Check",
+      "label": "Active"
+    },
+    {
+      "fieldname": "sort_order",
+      "fieldtype": "Int",
+      "label": "Sort Order"
+    }
+  ],
+  "index_web_pages_for_search": 1,
+  "links": [],
+  "modified": "2026-03-14 12:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "Church MRM",
+  "name": "Donation Type",
+  "naming_rule": "By fieldname",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "read": 1,
+      "role": "All"
+    }
+  ],
+  "sort_field": "sort_order",
+  "sort_order": "ASC",
+  "states": [],
+  "track_changes": 1
+}
