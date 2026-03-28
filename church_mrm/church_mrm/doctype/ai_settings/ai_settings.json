@@ -1,0 +1,118 @@
+{
+  "actions": [],
+  "creation": "2026-03-28 12:00:00.000000",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "field_order": [
+    "section_api",
+    "claude_model",
+    "column_break_api",
+    "max_tokens",
+    "temperature",
+    "section_prompt",
+    "system_prompt",
+    "section_limits",
+    "max_messages_per_conversation",
+    "daily_request_limit_per_user",
+    "column_break_limits",
+    "allow_guest_access",
+    "guest_daily_limit"
+  ],
+  "fields": [
+    {
+      "fieldname": "section_api",
+      "fieldtype": "Section Break",
+      "label": "API Configuration"
+    },
+    {
+      "default": "claude-sonnet-4-20250514",
+      "fieldname": "claude_model",
+      "fieldtype": "Data",
+      "label": "Claude Model",
+      "reqd": 1
+    },
+    {
+      "fieldname": "column_break_api",
+      "fieldtype": "Column Break"
+    },
+    {
+      "default": "4096",
+      "fieldname": "max_tokens",
+      "fieldtype": "Int",
+      "label": "Max Tokens per Response",
+      "reqd": 1
+    },
+    {
+      "default": "0.7",
+      "fieldname": "temperature",
+      "fieldtype": "Float",
+      "label": "Temperature"
+    },
+    {
+      "fieldname": "section_prompt",
+      "fieldtype": "Section Break",
+      "label": "System Prompt"
+    },
+    {
+      "fieldname": "system_prompt",
+      "fieldtype": "Code",
+      "label": "System Prompt",
+      "options": "Markdown"
+    },
+    {
+      "fieldname": "section_limits",
+      "fieldtype": "Section Break",
+      "label": "Usage Limits"
+    },
+    {
+      "default": "100",
+      "fieldname": "max_messages_per_conversation",
+      "fieldtype": "Int",
+      "label": "Max Messages per Conversation"
+    },
+    {
+      "default": "50",
+      "fieldname": "daily_request_limit_per_user",
+      "fieldtype": "Int",
+      "label": "Daily Request Limit per User"
+    },
+    {
+      "fieldname": "column_break_limits",
+      "fieldtype": "Column Break"
+    },
+    {
+      "default": "0",
+      "fieldname": "allow_guest_access",
+      "fieldtype": "Check",
+      "label": "Allow Guest Access"
+    },
+    {
+      "default": "5",
+      "depends_on": "eval:doc.allow_guest_access",
+      "fieldname": "guest_daily_limit",
+      "fieldtype": "Int",
+      "label": "Guest Daily Limit"
+    }
+  ],
+  "index_web_pages_for_search": 0,
+  "issingle": 1,
+  "links": [],
+  "modified": "2026-03-28 12:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "Church MRM",
+  "name": "AI Settings",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "read": 1,
+      "role": "System Manager",
+      "write": 1
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": [],
+  "track_changes": 1
+}

@@ -1,0 +1,145 @@
+{
+  "actions": [],
+  "autoname": "naming_series:",
+  "creation": "2026-03-28 12:00:00.000000",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "field_order": [
+    "naming_series",
+    "title",
+    "user",
+    "column_break_1",
+    "started_at",
+    "last_message_at",
+    "status",
+    "section_messages",
+    "messages",
+    "section_meta",
+    "total_tokens_used",
+    "model_used",
+    "session_id"
+  ],
+  "fields": [
+    {
+      "fieldname": "naming_series",
+      "fieldtype": "Select",
+      "label": "Naming Series",
+      "options": "AIC-.YYYY.-.#####",
+      "reqd": 1,
+      "default": "AIC-.YYYY.-.#####"
+    },
+    {
+      "bold": 1,
+      "fieldname": "title",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Title"
+    },
+    {
+      "default": "__user",
+      "fieldname": "user",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "User",
+      "options": "User",
+      "reqd": 1
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "default": "Now",
+      "fieldname": "started_at",
+      "fieldtype": "Datetime",
+      "in_list_view": 1,
+      "label": "Started At"
+    },
+    {
+      "fieldname": "last_message_at",
+      "fieldtype": "Datetime",
+      "label": "Last Message At",
+      "read_only": 1
+    },
+    {
+      "default": "Active",
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "label": "Status",
+      "options": "Active\nArchived"
+    },
+    {
+      "fieldname": "section_messages",
+      "fieldtype": "Section Break",
+      "label": "Messages"
+    },
+    {
+      "fieldname": "messages",
+      "fieldtype": "Table",
+      "label": "Messages",
+      "options": "AI Message"
+    },
+    {
+      "fieldname": "section_meta",
+      "fieldtype": "Section Break",
+      "label": "Metadata",
+      "collapsible": 1
+    },
+    {
+      "default": "0",
+      "fieldname": "total_tokens_used",
+      "fieldtype": "Int",
+      "label": "Total Tokens Used",
+      "read_only": 1
+    },
+    {
+      "default": "claude-sonnet-4-20250514",
+      "fieldname": "model_used",
+      "fieldtype": "Data",
+      "label": "Model Used",
+      "read_only": 1
+    },
+    {
+      "fieldname": "session_id",
+      "fieldtype": "Data",
+      "label": "Session ID",
+      "read_only": 1,
+      "unique": 1
+    }
+  ],
+  "index_web_pages_for_search": 0,
+  "links": [],
+  "modified": "2026-03-28 12:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "Church MRM",
+  "name": "AI Conversation",
+  "naming_rule": "By \"Naming Series\" field",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "read": 1,
+      "role": "Website User",
+      "write": 1,
+      "match": "user"
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": [],
+  "title_field": "title",
+  "track_changes": 1
+}

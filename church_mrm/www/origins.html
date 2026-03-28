@@ -1,0 +1,803 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<style>
+    /* Hide default Frappe page header and breadcrumbs */
+    .page-header, .page-header-wrapper, [data-page-container] > .container > .page-header {
+        display: none !important;
+    }
+
+    /* ── Layout ── */
+    .origins-app {
+        display: flex;
+        height: calc(100vh - 60px);
+        max-width: 1200px;
+        margin: -15px auto 0 auto;
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    }
+
+    /* ── Sidebar ── */
+    .origins-sidebar {
+        width: 280px;
+        min-width: 280px;
+        background: #F4F6F8;
+        border-right: 1px solid #e0e0e0;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s ease;
+    }
+    .sidebar-header {
+        padding: 16px;
+        border-bottom: 1px solid #e0e0e0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .sidebar-header h3 {
+        margin: 0;
+        font-size: 14px;
+        color: #2C3E50;
+        flex: 1;
+    }
+    .btn-new-chat {
+        background: linear-gradient(135deg, #3a9e8a, #4ABFAB);
+        color: white;
+        border: none;
+        padding: 8px 14px;
+        border-radius: 8px;
+        font-size: 13px;
+        cursor: pointer;
+        font-weight: 600;
+        width: 100%;
+    }
+    .btn-new-chat:hover {
+        background: linear-gradient(135deg, #2e8571, #3a9e8a);
+    }
+    .conversation-list {
+        flex: 1;
+        overflow-y: auto;
+        padding: 8px;
+    }
+    .conv-item {
+        padding: 10px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-bottom: 4px;
+        transition: background 0.2s;
+    }
+    .conv-item:hover {
+        background: #e8ecef;
+    }
+    .conv-item.active {
+        background: #d4eff7;
+        border-left: 3px solid #4ABFAB;
+    }
+    .conv-item-title {
+        font-size: 13px;
+        font-weight: 500;
+        color: #2C3E50;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .conv-item-date {
+        font-size: 11px;
+        color: #8899AA;
+        margin-top: 2px;
+    }
+
+    /* ── Main Chat Area ── */
+    .origins-main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+    }
+
+    /* ── Header ── */
+    .origins-header {
+        background: linear-gradient(135deg, #3a9e8a, #4ABFAB, #6BB8D4);
+        color: white;
+        padding: 20px 24px;
+        text-align: center;
+        flex-shrink: 0;
+    }
+    .origins-header h1 {
+        margin: 0;
+        font-size: 1.4rem;
+        color: white;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+    .origins-header p {
+        margin: 4px 0 0;
+        opacity: 0.9;
+        font-size: 0.85rem;
+    }
+    .header-controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+    }
+    .btn-sidebar-toggle {
+        display: none;
+        background: rgba(255,255,255,0.2);
+        border: none;
+        color: white;
+        padding: 6px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 18px;
+        position: absolute;
+        left: 16px;
+        top: 16px;
+    }
+
+    /* ── Messages ── */
+    .messages-container {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    /* ── Welcome Screen ── */
+    .welcome-screen {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        padding: 20px;
+    }
+    .welcome-icon {
+        font-size: 48px;
+        margin-bottom: 16px;
+    }
+    .welcome-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #2C3E50;
+        margin-bottom: 8px;
+    }
+    .welcome-subtitle {
+        font-size: 0.9rem;
+        color: #5A6C7D;
+        margin-bottom: 24px;
+        text-align: center;
+        max-width: 500px;
+    }
+    .topic-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 12px;
+        width: 100%;
+        max-width: 700px;
+    }
+    .topic-card {
+        border: 1px solid #d4eff7;
+        border-radius: 10px;
+        padding: 14px 16px;
+        cursor: pointer;
+        background: #FAFCFD;
+        transition: all 0.2s;
+    }
+    .topic-card:hover {
+        border-color: #4ABFAB;
+        box-shadow: 0 4px 12px rgba(74, 191, 171, 0.15);
+        transform: translateY(-2px);
+    }
+    .topic-card-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #3a9e8a;
+        margin-bottom: 4px;
+    }
+    .topic-card-subtitle {
+        font-size: 12px;
+        color: #5A6C7D;
+    }
+
+    /* ── Message Bubbles ── */
+    .message {
+        display: flex;
+        gap: 10px;
+        max-width: 85%;
+    }
+    .message.user {
+        align-self: flex-end;
+        flex-direction: row-reverse;
+    }
+    .message.assistant {
+        align-self: flex-start;
+    }
+    .message-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        flex-shrink: 0;
+        font-weight: 600;
+    }
+    .message.user .message-avatar {
+        background: linear-gradient(135deg, #3a9e8a, #4ABFAB);
+        color: white;
+    }
+    .message.assistant .message-avatar {
+        background: linear-gradient(135deg, #6BB8D4, #4ABFAB);
+        color: white;
+    }
+    .message-bubble {
+        padding: 12px 16px;
+        border-radius: 16px;
+        font-size: 14px;
+        line-height: 1.6;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    .message.user .message-bubble {
+        background: linear-gradient(135deg, #3a9e8a, #4ABFAB);
+        color: white;
+        border-bottom-right-radius: 4px;
+    }
+    .message.assistant .message-bubble {
+        background: #f8f9fa;
+        border: 1px solid #e0e0e0;
+        color: #2C3E50;
+        border-bottom-left-radius: 4px;
+    }
+
+    /* ── Markdown in assistant messages ── */
+    .message.assistant .message-bubble h1,
+    .message.assistant .message-bubble h2,
+    .message.assistant .message-bubble h3,
+    .message.assistant .message-bubble h4 {
+        margin-top: 12px;
+        margin-bottom: 6px;
+        color: #3a9e8a;
+    }
+    .message.assistant .message-bubble h1 { font-size: 1.2em; }
+    .message.assistant .message-bubble h2 { font-size: 1.1em; }
+    .message.assistant .message-bubble h3 { font-size: 1.05em; }
+    .message.assistant .message-bubble p { margin: 6px 0; }
+    .message.assistant .message-bubble ul,
+    .message.assistant .message-bubble ol {
+        padding-left: 20px;
+        margin: 6px 0;
+    }
+    .message.assistant .message-bubble li { margin: 3px 0; }
+    .message.assistant .message-bubble strong { color: #2C3E50; }
+    .message.assistant .message-bubble em { color: #5A6C7D; }
+    .message.assistant .message-bubble blockquote {
+        border-left: 3px solid #4ABFAB;
+        margin: 8px 0;
+        padding: 4px 12px;
+        background: #EBF6FA;
+        border-radius: 0 6px 6px 0;
+        font-style: italic;
+    }
+    .message.assistant .message-bubble code {
+        background: #EBF6FA;
+        padding: 1px 5px;
+        border-radius: 4px;
+        font-size: 0.9em;
+    }
+    .message.assistant .message-bubble pre {
+        background: #2C3E50;
+        color: #e0e0e0;
+        padding: 12px;
+        border-radius: 8px;
+        overflow-x: auto;
+        font-size: 0.85em;
+    }
+    .message.assistant .message-bubble pre code {
+        background: none;
+        padding: 0;
+        color: inherit;
+    }
+
+    /* ── Typing Indicator ── */
+    .typing-indicator {
+        display: none;
+        align-self: flex-start;
+        gap: 10px;
+        max-width: 85%;
+    }
+    .typing-indicator.visible {
+        display: flex;
+    }
+    .typing-dots {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 12px 16px;
+        background: #f8f9fa;
+        border: 1px solid #e0e0e0;
+        border-radius: 16px;
+        border-bottom-left-radius: 4px;
+    }
+    .typing-dots span {
+        width: 8px;
+        height: 8px;
+        background: #4ABFAB;
+        border-radius: 50%;
+        animation: typingBounce 1.4s infinite ease-in-out;
+    }
+    .typing-dots span:nth-child(1) { animation-delay: 0s; }
+    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typingBounce {
+        0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+        40% { transform: scale(1); opacity: 1; }
+    }
+
+    /* ── Input Area ── */
+    .input-area {
+        border-top: 1px solid #e0e0e0;
+        padding: 16px 24px;
+        background: #fff;
+        flex-shrink: 0;
+    }
+    .input-wrapper {
+        display: flex;
+        gap: 10px;
+        align-items: flex-end;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    .input-wrapper textarea {
+        flex: 1;
+        border: 1px solid #d0d5dd;
+        border-radius: 12px;
+        padding: 12px 16px;
+        font-size: 14px;
+        resize: none;
+        min-height: 44px;
+        max-height: 120px;
+        outline: none;
+        font-family: inherit;
+        line-height: 1.4;
+    }
+    .input-wrapper textarea:focus {
+        border-color: #4ABFAB;
+        box-shadow: 0 0 0 3px rgba(74, 191, 171, 0.15);
+    }
+    .btn-send {
+        background: linear-gradient(135deg, #3a9e8a, #4ABFAB);
+        color: white;
+        border: none;
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: opacity 0.2s;
+    }
+    .btn-send:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    .btn-send:hover:not(:disabled) {
+        background: linear-gradient(135deg, #2e8571, #3a9e8a);
+    }
+
+    /* ── Guest Banner ── */
+    .guest-banner {
+        background: #EBF6FA;
+        border-bottom: 1px solid #d4eff7;
+        padding: 8px 16px;
+        text-align: center;
+        font-size: 13px;
+        color: #5A6C7D;
+    }
+    .guest-banner a {
+        color: #3a9e8a;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    /* ── Error Banner ── */
+    .error-banner {
+        background: #fff0f0;
+        border: 1px solid #ffc9c9;
+        border-radius: 8px;
+        padding: 10px 16px;
+        margin: 8px 24px;
+        font-size: 13px;
+        color: #c92a2a;
+        display: none;
+    }
+    .error-banner.visible {
+        display: block;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+        .origins-app {
+            height: calc(100vh - 50px);
+            border-radius: 0;
+            margin: -15px -15px 0 -15px;
+        }
+        .origins-sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 1000;
+            transform: translateX(-100%);
+            box-shadow: 4px 0 16px rgba(0,0,0,0.1);
+        }
+        .origins-sidebar.open {
+            transform: translateX(0);
+        }
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.3);
+            z-index: 999;
+        }
+        .sidebar-overlay.visible {
+            display: block;
+        }
+        .btn-sidebar-toggle {
+            display: block;
+        }
+        .origins-header {
+            position: relative;
+            padding: 16px;
+        }
+        .messages-container {
+            padding: 12px;
+        }
+        .message {
+            max-width: 92%;
+        }
+        .topic-cards {
+            grid-template-columns: 1fr;
+        }
+        .input-area {
+            padding: 12px;
+        }
+    }
+</style>
+
+<!-- Markdown parser (lightweight, 8KB gzipped) -->
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+
+<div class="origins-app">
+    <!-- Sidebar Overlay (mobile) -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <!-- Sidebar -->
+    <div class="origins-sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <button class="btn-new-chat" onclick="startNewConversation()">+ New Conversation</button>
+        </div>
+        <div class="conversation-list" id="conversationList">
+            {% if not is_logged_in %}
+            <div style="padding: 16px; text-align: center; color: #8899AA; font-size: 13px;">
+                <a href="/login" style="color: #3a9e8a;">Log in</a> to save conversations
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Main Area -->
+    <div class="origins-main">
+        <!-- Header -->
+        <div class="origins-header">
+            <button class="btn-sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()">&#9776;</button>
+            <h1>Origins of Ideas</h1>
+            <p>Tracing ideas from philosophy and history to Biblical truth</p>
+        </div>
+
+        {% if not is_logged_in %}
+        <div class="guest-banner">
+            You are exploring as a guest. <a href="/login">Log in</a> to save your conversations and get higher usage limits.
+        </div>
+        {% endif %}
+
+        <!-- Error Banner -->
+        <div class="error-banner" id="errorBanner"></div>
+
+        <!-- Messages -->
+        <div class="messages-container" id="messagesContainer">
+            <!-- Welcome (shown when no messages) -->
+            <div class="welcome-screen" id="welcomeScreen">
+                <div class="welcome-icon">&#128218;</div>
+                <div class="welcome-title">Explore the Origins of Ideas</div>
+                <div class="welcome-subtitle">
+                    Ask about any philosophical, theological, or historical idea and trace it
+                    from its earliest sources through to Biblical truth.
+                </div>
+                <div class="topic-cards" id="topicCards"></div>
+            </div>
+        </div>
+
+        <!-- Typing Indicator -->
+        <div class="typing-indicator" id="typingIndicator">
+            <div class="message-avatar" style="background:linear-gradient(135deg,#6BB8D4,#4ABFAB);color:white;">OI</div>
+            <div class="typing-dots">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+
+        <!-- Input -->
+        <div class="input-area">
+            <div class="input-wrapper">
+                <textarea id="userInput"
+                    placeholder="Ask about the origins of an idea..."
+                    rows="1"
+                    onkeydown="handleKeyDown(event)"
+                    oninput="autoResize(this)"></textarea>
+                <button class="btn-send" id="sendBtn" onclick="sendMessage()" title="Send">&#10148;</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ── State ──
+let currentConversationId = null;
+let isLoading = false;
+const isLoggedIn = {{ 'true' if is_logged_in else 'false' }};
+
+// ── Markdown Setup ──
+if (typeof marked !== 'undefined') {
+    marked.setOptions({
+        breaks: true,
+        gfm: true,
+    });
+}
+
+// ── Init ──
+document.addEventListener('DOMContentLoaded', function() {
+    loadTopicSuggestions();
+    if (isLoggedIn) {
+        loadConversations();
+    }
+    document.getElementById('userInput').focus();
+});
+
+// ── Topic Suggestions ──
+function loadTopicSuggestions() {
+    frappe.call({
+        method: 'church_mrm.api.origins_chat.get_topic_suggestions',
+        callback: function(r) {
+            if (r.message) {
+                renderTopicCards(r.message);
+            }
+        }
+    });
+}
+
+function renderTopicCards(topics) {
+    var container = document.getElementById('topicCards');
+    container.innerHTML = '';
+    topics.forEach(function(topic) {
+        var card = document.createElement('div');
+        card.className = 'topic-card';
+        card.onclick = function() { sendTopicMessage(topic.prompt); };
+        card.innerHTML = '<div class="topic-card-title">' + topic.title + '</div>' +
+                         '<div class="topic-card-subtitle">' + topic.subtitle + '</div>';
+        container.appendChild(card);
+    });
+}
+
+// ── Conversations List ──
+function loadConversations() {
+    frappe.call({
+        method: 'church_mrm.api.origins_chat.get_conversations',
+        callback: function(r) {
+            if (r.message) {
+                renderConversationList(r.message);
+            }
+        }
+    });
+}
+
+function renderConversationList(conversations) {
+    var list = document.getElementById('conversationList');
+    list.innerHTML = '';
+    if (!conversations.length) {
+        list.innerHTML = '<div style="padding:16px;text-align:center;color:#8899AA;font-size:13px;">No conversations yet</div>';
+        return;
+    }
+    conversations.forEach(function(conv) {
+        var item = document.createElement('div');
+        item.className = 'conv-item' + (conv.name === currentConversationId ? ' active' : '');
+        item.onclick = function() { loadConversation(conv.name); };
+        var dateStr = conv.last_message_at ? frappe.datetime.prettyDate(conv.last_message_at) : '';
+        item.innerHTML = '<div class="conv-item-title">' + escapeHtml(conv.title || 'Untitled') + '</div>' +
+                         '<div class="conv-item-date">' + dateStr + '</div>';
+        list.appendChild(item);
+    });
+}
+
+// ── Load Conversation ──
+function loadConversation(conversationId) {
+    frappe.call({
+        method: 'church_mrm.api.origins_chat.get_conversation',
+        args: { conversation_id: conversationId },
+        callback: function(r) {
+            if (r.message) {
+                currentConversationId = r.message.conversation_id;
+                var container = document.getElementById('messagesContainer');
+                container.innerHTML = '';
+                document.getElementById('welcomeScreen').style.display = 'none';
+
+                r.message.messages.forEach(function(msg) {
+                    if (msg.role === 'user' || msg.role === 'assistant') {
+                        appendMessage(msg.role, msg.content);
+                    }
+                });
+                scrollToBottom();
+                if (isLoggedIn) loadConversations();
+                toggleSidebar(false);
+            }
+        }
+    });
+}
+
+// ── New Conversation ──
+function startNewConversation() {
+    currentConversationId = null;
+    var container = document.getElementById('messagesContainer');
+    container.innerHTML = '';
+
+    // Re-add welcome screen
+    var welcome = document.createElement('div');
+    welcome.className = 'welcome-screen';
+    welcome.id = 'welcomeScreen';
+    welcome.innerHTML =
+        '<div class="welcome-icon">&#128218;</div>' +
+        '<div class="welcome-title">Explore the Origins of Ideas</div>' +
+        '<div class="welcome-subtitle">Ask about any philosophical, theological, or historical idea and trace it from its earliest sources through to Biblical truth.</div>' +
+        '<div class="topic-cards" id="topicCards"></div>';
+    container.appendChild(welcome);
+    loadTopicSuggestions();
+    document.getElementById('userInput').focus();
+    toggleSidebar(false);
+}
+
+// ── Send Message ──
+function sendMessage() {
+    var input = document.getElementById('userInput');
+    var message = input.value.trim();
+    if (!message || isLoading) return;
+
+    // Hide welcome screen
+    var welcome = document.getElementById('welcomeScreen');
+    if (welcome) welcome.style.display = 'none';
+
+    // Show user message
+    appendMessage('user', message);
+    input.value = '';
+    autoResize(input);
+    hideError();
+
+    // Show typing
+    isLoading = true;
+    document.getElementById('sendBtn').disabled = true;
+    document.getElementById('typingIndicator').classList.add('visible');
+    scrollToBottom();
+
+    frappe.call({
+        method: 'church_mrm.api.origins_chat.send_message',
+        args: {
+            conversation_id: currentConversationId,
+            message: message
+        },
+        callback: function(r) {
+            isLoading = false;
+            document.getElementById('sendBtn').disabled = false;
+            document.getElementById('typingIndicator').classList.remove('visible');
+
+            if (r.message) {
+                currentConversationId = r.message.conversation_id;
+                appendMessage('assistant', r.message.reply);
+                scrollToBottom();
+                if (isLoggedIn) loadConversations();
+            }
+        },
+        error: function(r) {
+            isLoading = false;
+            document.getElementById('sendBtn').disabled = false;
+            document.getElementById('typingIndicator').classList.remove('visible');
+            var errMsg = (r && r.message) || 'Something went wrong. Please try again.';
+            showError(errMsg);
+        }
+    });
+}
+
+function sendTopicMessage(prompt) {
+    document.getElementById('userInput').value = prompt;
+    sendMessage();
+}
+
+// ── Append Message to DOM ──
+function appendMessage(role, content) {
+    var container = document.getElementById('messagesContainer');
+    var msgDiv = document.createElement('div');
+    msgDiv.className = 'message ' + role;
+
+    var avatarLetter = role === 'user' ? 'U' : 'OI';
+    var avatarStyle = role === 'user'
+        ? 'background:linear-gradient(135deg,#3a9e8a,#4ABFAB);color:white;'
+        : 'background:linear-gradient(135deg,#6BB8D4,#4ABFAB);color:white;';
+
+    var bubbleContent = role === 'assistant' && typeof marked !== 'undefined'
+        ? marked.parse(content)
+        : escapeHtml(content).replace(/\n/g, '<br>');
+
+    msgDiv.innerHTML =
+        '<div class="message-avatar" style="' + avatarStyle + '">' + avatarLetter + '</div>' +
+        '<div class="message-bubble">' + bubbleContent + '</div>';
+
+    container.appendChild(msgDiv);
+}
+
+// ── Helpers ──
+function scrollToBottom() {
+    var container = document.getElementById('messagesContainer');
+    setTimeout(function() {
+        container.scrollTop = container.scrollHeight;
+    }, 50);
+}
+
+function handleKeyDown(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+    }
+}
+
+function autoResize(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+function toggleSidebar(forceState) {
+    var sidebar = document.getElementById('sidebar');
+    var overlay = document.getElementById('sidebarOverlay');
+    var isOpen = typeof forceState === 'boolean' ? !forceState : sidebar.classList.contains('open');
+    if (isOpen) {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('visible');
+    } else {
+        sidebar.classList.add('open');
+        overlay.classList.add('visible');
+    }
+}
+
+function showError(msg) {
+    var banner = document.getElementById('errorBanner');
+    banner.textContent = msg;
+    banner.classList.add('visible');
+}
+
+function hideError() {
+    document.getElementById('errorBanner').classList.remove('visible');
+}
+
+function escapeHtml(text) {
+    var div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+</script>
+{% endblock %}

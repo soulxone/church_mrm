@@ -73,6 +73,7 @@ website_route_rules = [
     {"from_route": "/church-events", "to_route": "church_events"},
     {"from_route": "/membership-signup", "to_route": "membership_signup"},
     {"from_route": "/expense-scanner", "to_route": "expense_scanner"},
+    {"from_route": "/origins", "to_route": "origins"},
 ]
 
 # Website context for portal
