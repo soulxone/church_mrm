@@ -157,8 +157,8 @@
         padding: 20px;
     }
     .welcome-icon {
-        font-size: 48px;
-        margin-bottom: 16px;
+        margin-bottom: 20px;
+        filter: drop-shadow(0 6px 18px rgba(180,140,60,0.45));
     }
     .welcome-title {
         font-size: 1.3rem;
@@ -518,7 +518,161 @@
         <div class="messages-container" id="messagesContainer">
             <!-- Welcome (shown when no messages) -->
             <div class="welcome-screen" id="welcomeScreen">
-                <div class="welcome-icon">&#128218;</div>
+                <div class="welcome-icon">
+<svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 140 140" aria-label="Ancient seal of YAHWEH">
+  <defs>
+    <!-- Outer gold ring gradient -->
+    <radialGradient id="goldRing" cx="50%" cy="35%" r="65%">
+      <stop offset="0%"   stop-color="#FFF0A0"/>
+      <stop offset="25%"  stop-color="#E8B84B"/>
+      <stop offset="55%"  stop-color="#C8882A"/>
+      <stop offset="78%"  stop-color="#D4A030"/>
+      <stop offset="100%" stop-color="#8B5E10"/>
+    </radialGradient>
+    <!-- Inner seal face gradient -->
+    <radialGradient id="sealFace" cx="45%" cy="38%" r="60%">
+      <stop offset="0%"   stop-color="#3A2800"/>
+      <stop offset="40%"  stop-color="#2A1E00"/>
+      <stop offset="100%" stop-color="#1A1200"/>
+    </radialGradient>
+    <!-- Scroll body gradient -->
+    <linearGradient id="scrollBody" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#FFE88A"/>
+      <stop offset="30%"  stop-color="#D4A030"/>
+      <stop offset="60%"  stop-color="#B07820"/>
+      <stop offset="100%" stop-color="#8B5E10"/>
+    </linearGradient>
+    <!-- Scroll parchment fill -->
+    <linearGradient id="parchment" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#FFF5C8"/>
+      <stop offset="50%"  stop-color="#F0E0A0"/>
+      <stop offset="100%" stop-color="#D8C070"/>
+    </linearGradient>
+    <!-- Gold text gradient -->
+    <linearGradient id="goldText" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#FFFACC"/>
+      <stop offset="35%"  stop-color="#F0C030"/>
+      <stop offset="65%"  stop-color="#C88818"/>
+      <stop offset="100%" stop-color="#A06010"/>
+    </linearGradient>
+    <!-- Engraving highlight gradient -->
+    <linearGradient id="engrave" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#FFE066"/>
+      <stop offset="100%" stop-color="#A07010"/>
+    </linearGradient>
+    <!-- Ring bevel filter -->
+    <filter id="bevel" x="-5%" y="-5%" width="110%" height="110%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1.5" result="blur"/>
+      <feOffset dx="1" dy="2" result="offsetBlur"/>
+      <feComposite in="SourceGraphic" in2="offsetBlur" operator="over"/>
+    </filter>
+    <!-- Glow on text -->
+    <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.2" result="blur"/>
+      <feFlood flood-color="#FFD700" flood-opacity="0.6" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- Knurling clip -->
+    <clipPath id="ringClip">
+      <circle cx="70" cy="70" r="67"/>
+    </clipPath>
+  </defs>
+
+  <!-- ── Outer raised ring (gold) ── -->
+  <circle cx="70" cy="70" r="67" fill="url(#goldRing)" filter="url(#bevel)"/>
+
+  <!-- Knurling notches around rim -->
+  <g stroke="#8B5E10" stroke-width="0.6" opacity="0.55" clip-path="url(#ringClip)">
+    <circle cx="70" cy="70" r="66" fill="none" stroke="#FFE88A" stroke-width="1" opacity="0.3"/>
+    <circle cx="70" cy="70" r="63" fill="none" stroke="#8B5E10" stroke-width="0.5" opacity="0.4"/>
+  </g>
+
+  <!-- ── Inner seal face ── -->
+  <circle cx="70" cy="70" r="58" fill="url(#sealFace)"/>
+
+  <!-- Subtle radial grain lines on face -->
+  <g stroke="#3D2C00" stroke-width="0.4" opacity="0.3">
+    <circle cx="70" cy="70" r="54" fill="none"/>
+    <circle cx="70" cy="70" r="48" fill="none"/>
+  </g>
+
+  <!-- ── Decorative border ring inside face ── -->
+  <circle cx="70" cy="70" r="56" fill="none" stroke="#C8882A" stroke-width="1.5" opacity="0.7"/>
+  <circle cx="70" cy="70" r="54" fill="none" stroke="#FFE066" stroke-width="0.5" opacity="0.4"/>
+
+  <!-- ── Ancient scroll ── -->
+  <!-- Scroll shadow -->
+  <ellipse cx="71" cy="85" rx="26" ry="4" fill="#000" opacity="0.25"/>
+
+  <!-- Left rod (roller) -->
+  <rect x="34" y="56" width="8" height="36" rx="4" ry="4" fill="url(#scrollBody)"/>
+  <ellipse cx="38" cy="56" rx="4" ry="2.5" fill="#FFE88A" opacity="0.8"/>
+  <ellipse cx="38" cy="92" rx="4" ry="2.5" fill="#8B5E10" opacity="0.7"/>
+
+  <!-- Right rod (roller) -->
+  <rect x="98" y="56" width="8" height="36" rx="4" ry="4" fill="url(#scrollBody)"/>
+  <ellipse cx="102" cy="56" rx="4" ry="2.5" fill="#FFE88A" opacity="0.8"/>
+  <ellipse cx="102" cy="92" rx="4" ry="2.5" fill="#8B5E10" opacity="0.7"/>
+
+  <!-- Parchment body (main scroll face) -->
+  <rect x="42" y="54" width="56" height="40" rx="3" fill="url(#parchment)"/>
+
+  <!-- Parchment curl edges -->
+  <path d="M42,54 Q42,58 38,61 Q42,64 42,68 Q42,72 38,75 Q42,78 42,82 Q42,86 42,94" fill="none" stroke="#D8C070" stroke-width="1.5" opacity="0.6"/>
+  <path d="M98,54 Q98,58 102,61 Q98,64 98,68 Q98,72 102,75 Q98,78 98,82 Q98,86 98,94" fill="none" stroke="#D8C070" stroke-width="1.5" opacity="0.6"/>
+
+  <!-- Parchment texture lines -->
+  <line x1="46" y1="64" x2="94" y2="64" stroke="#C8A040" stroke-width="0.5" opacity="0.4"/>
+  <line x1="46" y1="70" x2="94" y2="70" stroke="#C8A040" stroke-width="0.5" opacity="0.4"/>
+  <line x1="46" y1="76" x2="94" y2="76" stroke="#C8A040" stroke-width="0.5" opacity="0.4"/>
+  <line x1="46" y1="82" x2="94" y2="82" stroke="#C8A040" stroke-width="0.5" opacity="0.4"/>
+
+  <!-- ── YAHWEH in Hebrew (יהוה) engraved in gold ── -->
+  <!-- Hebrew reads right to left: י ה ו ה -->
+  <text x="70" y="75"
+        text-anchor="middle"
+        font-family="'Times New Roman', serif"
+        font-size="17"
+        font-weight="bold"
+        letter-spacing="3"
+        fill="url(#goldText)"
+        filter="url(#goldGlow)"
+        direction="rtl">יהוה</text>
+
+  <!-- ── YAHWEH in Latin letters below ── -->
+  <text x="70" y="87"
+        text-anchor="middle"
+        font-family="'Times New Roman', 'Palatino Linotype', serif"
+        font-size="7.5"
+        font-weight="bold"
+        letter-spacing="2.5"
+        fill="url(#engrave)"
+        opacity="0.85">YAHWEH</text>
+
+  <!-- ── Curved text around the ring: ancient inscription ── -->
+  <path id="topArc" d="M 18,70 A 52,52 0 0,1 122,70" fill="none"/>
+  <path id="botArc" d="M 20,76 A 52,52 0 0,0 120,76" fill="none"/>
+
+  <text font-family="'Times New Roman', serif" font-size="7.5" fill="#FFE066" letter-spacing="1.8" opacity="0.8">
+    <textPath href="#topArc" startOffset="10%">· ORIGIN · OF · ALL · THINGS ·</textPath>
+  </text>
+  <text font-family="'Times New Roman', serif" font-size="7" fill="#D4A030" letter-spacing="1.4" opacity="0.65">
+    <textPath href="#botArc" startOffset="12%">· BERESHIT · IN · THE · BEGINNING ·</textPath>
+  </text>
+
+  <!-- ── Small decorative stars at cardinal points ── -->
+  <g fill="#FFE066" opacity="0.7" font-size="7" font-family="serif" text-anchor="middle">
+    <text x="70"  y="18">✦</text>
+    <text x="70"  y="129">✦</text>
+    <text x="11"  y="73">✦</text>
+    <text x="129" y="73">✦</text>
+  </g>
+
+  <!-- ── Outer thin gold border ── -->
+  <circle cx="70" cy="70" r="67" fill="none" stroke="#FFE88A" stroke-width="1" opacity="0.5"/>
+</svg>
+                </div>
                 <div class="welcome-title">Explore the Origins of Ideas</div>
                 <div class="welcome-subtitle">
                     Ask about any philosophical, theological, or historical idea and trace it
