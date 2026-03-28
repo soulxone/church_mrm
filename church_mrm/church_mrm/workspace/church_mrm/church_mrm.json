@@ -291,6 +291,36 @@
     {
       "hidden": 0,
       "is_query_report": 0,
+      "label": "Discipleship",
+      "link_count": 0,
+      "onboard": 0,
+      "type": "Card Break"
+    },
+    {
+      "hidden": 0,
+      "icon": "education",
+      "is_query_report": 0,
+      "label": "Origins of Ideas",
+      "link_count": 0,
+      "link_to": "/origins",
+      "link_type": "URL",
+      "onboard": 0,
+      "type": "Link"
+    },
+    {
+      "hidden": 0,
+      "icon": "book",
+      "is_query_report": 0,
+      "label": "Discipleship School",
+      "link_count": 0,
+      "link_to": "/discipleship",
+      "link_type": "URL",
+      "onboard": 0,
+      "type": "Link"
+    },
+    {
+      "hidden": 0,
+      "is_query_report": 0,
       "label": "Settings",
       "link_count": 0,
       "onboard": 0,

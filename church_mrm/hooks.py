@@ -56,6 +56,10 @@ fixtures = [
     {
         "dt": "Module Onboarding",
         "filters": [["module", "=", "Church MRM"]]
+    },
+    {
+        "dt": "Workspace",
+        "filters": [["module", "=", "Church MRM"]]
     }
 ]
 

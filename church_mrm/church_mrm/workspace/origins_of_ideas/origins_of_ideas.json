@@ -1,0 +1,103 @@
+{
+  "charts": [],
+  "content": "[{\"id\":1,\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Origins of Ideas</b></span>\",\"col\":12}},{\"id\":2,\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Origins of Ideas Chat\",\"col\":4}},{\"id\":3,\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"AI Settings\",\"col\":4}}]",
+  "creation": "2026-03-28 12:00:00.000000",
+  "docstatus": 0,
+  "doctype": "Workspace",
+  "for_user": "",
+  "hide_custom": 0,
+  "icon": "education",
+  "idx": 0,
+  "label": "Origins of Ideas",
+  "links": [
+    {
+      "hidden": 0,
+      "is_query_report": 0,
+      "label": "Research Tool",
+      "link_count": 0,
+      "onboard": 0,
+      "type": "Card Break"
+    },
+    {
+      "hidden": 0,
+      "icon": "education",
+      "is_query_report": 0,
+      "label": "Origins of Ideas",
+      "link_count": 0,
+      "link_to": "/origins",
+      "link_type": "URL",
+      "onboard": 1,
+      "type": "Link"
+    },
+    {
+      "hidden": 0,
+      "is_query_report": 0,
+      "label": "Conversation History",
+      "link_count": 0,
+      "onboard": 0,
+      "type": "Card Break"
+    },
+    {
+      "hidden": 0,
+      "icon": "chat",
+      "is_query_report": 0,
+      "label": "AI Conversation",
+      "link_count": 0,
+      "link_to": "AI Conversation",
+      "link_type": "DocType",
+      "onboard": 0,
+      "type": "Link"
+    },
+    {
+      "hidden": 0,
+      "is_query_report": 0,
+      "label": "Settings",
+      "link_count": 0,
+      "onboard": 0,
+      "type": "Card Break"
+    },
+    {
+      "hidden": 0,
+      "icon": "setting-gear",
+      "is_query_report": 0,
+      "label": "AI Settings",
+      "link_count": 0,
+      "link_to": "AI Settings",
+      "link_type": "DocType",
+      "onboard": 0,
+      "type": "Link"
+    }
+  ],
+  "modified": "2026-03-28 12:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "Church MRM",
+  "name": "Origins of Ideas",
+  "number_cards": [],
+  "owner": "Administrator",
+  "parent_page": "",
+  "public": 1,
+  "restrict_to_domain": "",
+  "roles": [],
+  "sequence_id": 31,
+  "shortcuts": [
+    {
+      "color": "#C8882A",
+      "doc_view": "",
+      "icon": "education",
+      "label": "Origins of Ideas Chat",
+      "url": "/origins",
+      "type": "URL"
+    },
+    {
+      "color": "#4ABFAB",
+      "doc_view": "",
+      "icon": "setting-gear",
+      "label": "AI Settings",
+      "link_to": "AI Settings",
+      "type": "DocType"
+    }
+  ],
+  "title": "Origins of Ideas",
+  "type": "Workspace",
+  "app": "church_mrm"
+}
