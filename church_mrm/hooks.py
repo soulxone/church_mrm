@@ -83,5 +83,5 @@ website_route_rules = [
 # Website context for portal
 website_context = {
     "favicon": "/assets/church_mrm/images/church_mrm.svg",
-    "splash_image": "/assets/church_mrm/images/church_mrm.svg",
+    "splash_image": "/assets/church_mrm/images/og-banner.svg",
 }

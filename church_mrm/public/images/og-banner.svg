@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" fill="none">
+  <defs>
+    <!-- PSC site gradient: matches linear-gradient(135deg, #3a9e8a, #4ABFAB, #6BB8D4) -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%"   stop-color="#3a9e8a"/>
+      <stop offset="50%"  stop-color="#4ABFAB"/>
+      <stop offset="100%" stop-color="#6BB8D4"/>
+    </linearGradient>
+    <!-- Subtle overlay for depth -->
+    <linearGradient id="overlay" x1="0" y1="0" x2="0" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%"   stop-color="rgba(255,255,255,0.12)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.18)"/>
+    </linearGradient>
+    <!-- Radial glow behind logo -->
+    <radialGradient id="logoGlow" cx="50%" cy="42%" r="22%">
+      <stop offset="0%"   stop-color="rgba(255,255,255,0.18)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+    <!-- Cross highlight -->
+    <linearGradient id="crossGrad" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0%"   stop-color="rgba(255,255,255,1)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0.75)"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+  <rect width="1200" height="630" fill="url(#overlay)"/>
+
+  <!-- Subtle decorative circles (background texture) -->
+  <circle cx="80"  cy="80"  r="220" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1.5"/>
+  <circle cx="1120" cy="550" r="280" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1.5"/>
+  <circle cx="1100" cy="100" r="160" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+  <circle cx="100"  cy="530" r="170" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+
+  <!-- Glow behind logo area -->
+  <ellipse cx="600" cy="255" rx="200" ry="160" fill="url(#logoGlow)"/>
+
+  <!-- ── Church Logo (small, ~100px equivalent, centered top-ish) ── -->
+  <!-- Using a scale factor: original 100x100 → here 88x88, centered at (600, 255) -->
+  <!-- So translate to 556, 211 -->
+  <g transform="translate(556, 211)">
+    <!-- Rounded tile background -->
+    <rect width="88" height="88" rx="19" fill="rgba(255,255,255,0.22)"/>
+    <rect width="88" height="88" rx="19" fill="rgba(255,255,255,0.10)"/>
+
+    <!-- Steeple -->
+    <polygon points="44,10 37,28 51,28" fill="white" opacity="0.95"/>
+    <!-- Cross on top -->
+    <rect x="42" y="7" width="4" height="12" rx="1" fill="white"/>
+    <rect x="38.5" y="10" width="11" height="3.5" rx="1" fill="white"/>
+    <!-- Tower body -->
+    <rect x="37" y="28" width="14" height="19" rx="1" fill="white" opacity="0.95"/>
+    <!-- Tower window (arch) -->
+    <rect x="40.5" y="31" width="7" height="9" rx="3.5" fill="rgba(58,158,138,0.6)"/>
+    <!-- Main church body left -->
+    <rect x="17" y="38" width="19" height="28" rx="1" fill="white" opacity="0.9"/>
+    <!-- Main church body right -->
+    <rect x="52" y="38" width="19" height="28" rx="1" fill="white" opacity="0.9"/>
+    <!-- Roof left -->
+    <polygon points="15,38 27,26 37,38" fill="white" opacity="0.95"/>
+    <!-- Roof right -->
+    <polygon points="51,38 61,26 73,38" fill="white" opacity="0.95"/>
+    <!-- Left windows -->
+    <rect x="20" y="44" width="5" height="7" rx="2.5" fill="rgba(74,191,171,0.55)"/>
+    <rect x="28" y="44" width="5" height="7" rx="2.5" fill="rgba(74,191,171,0.55)"/>
+    <!-- Right windows -->
+    <rect x="55" y="44" width="5" height="7" rx="2.5" fill="rgba(74,191,171,0.55)"/>
+    <rect x="63" y="44" width="5" height="7" rx="2.5" fill="rgba(74,191,171,0.55)"/>
+    <!-- Door -->
+    <rect x="39" y="40" width="10" height="7" rx="5" fill="rgba(58,158,138,0.6)"/>
+    <!-- Base -->
+    <rect x="13" y="66" width="62" height="5" rx="2" fill="white" opacity="0.85"/>
+    <!-- Heart -->
+    <path d="M44,80 C44,80 37,75.5 37,72 C37,70.2 38.8,68.5 40.5,68.5 C42.2,68.5 44,70.2 44,70.2 C44,70.2 45.8,68.5 47.5,68.5 C49.2,68.5 51,70.2 51,72 C51,75.5 44,80 44,80Z" fill="white" opacity="0.8"/>
+  </g>
+
+  <!-- ── Main church name ── -->
+  <text x="600" y="352"
+        text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="72"
+        font-weight="bold"
+        fill="white"
+        opacity="0.97"
+        letter-spacing="1">Pleasant Springs Church</text>
+
+  <!-- Decorative rule under name -->
+  <line x1="340" y1="374" x2="860" y2="374" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>
+
+  <!-- ── Tagline / motto ── -->
+  <text x="600" y="416"
+        text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="28"
+        fill="rgba(255,255,255,0.88)"
+        letter-spacing="0.5">Community  •  Home  •  Unity  •  Relationship  •  Care  •  Hope</text>
+
+  <!-- ── Location line ── -->
+  <text x="600" y="474"
+        text-anchor="middle"
+        font-family="'Arial', 'Helvetica', sans-serif"
+        font-size="22"
+        fill="rgba(255,255,255,0.65)"
+        letter-spacing="2.5">HENDERSON / PINSON, TENNESSEE</text>
+
+  <!-- Bottom accent bar -->
+  <rect x="0" y="600" width="1200" height="30" fill="rgba(0,0,0,0.15)"/>
+  <text x="600" y="621"
+        text-anchor="middle"
+        font-family="'Arial', 'Helvetica', sans-serif"
+        font-size="16"
+        fill="rgba(255,255,255,0.55)"
+        letter-spacing="1.5">ps-church.com</text>
+</svg>
