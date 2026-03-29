@@ -138,7 +138,7 @@ frappe.provide("church_mrm.photo_editor");
         var img = d.$wrapper.find("#pe-image")[0];
         var cropper = new Cropper(img, {
             viewMode: 1, dragMode: "crop", autoCropArea: 1,
-            responsive: true, rotatable: true, scalable: false,
+            responsive: true, rotatable: true, scalable: true,
             guides: true, center: true, background: true,
             ready: function() {
                 var data = cropper.getImageData();
