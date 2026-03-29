@@ -1,7 +1,7 @@
 import frappe
 import os
 import time
-from PIL import Image, ImageOps
+from PIL import Image, ImageOps, ImageEnhance, ImageFilter
 
 # Register HEIC/HEIF support if available
 try:
@@ -17,8 +17,22 @@ MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
 @frappe.whitelist()
 def process_photo(file_url, crop_x=0, crop_y=0, crop_width=0, crop_height=0,
                   rotate=0, resize_width=0, resize_height=0,
+                  flip_h=0, flip_v=0,
+                  brightness=1.0, contrast=1.0, sharpness=1.0, saturation=1.0,
+                  blur=0, auto_enhance=0, grayscale=0, sepia=0, invert=0,
                   doctype=None, docname=None):
-    """Process a photo with rotate, crop, and resize operations using Pillow."""
+    """Process a photo with full editing operations using Pillow.
+
+    Operations applied in order:
+    1. EXIF orientation fix
+    2. Rotate
+    3. Flip (horizontal/vertical)
+    4. Crop
+    5. Resize
+    6. Enhancements (brightness, contrast, sharpness, saturation)
+    7. Blur
+    8. Filters (grayscale, sepia, invert, auto-enhance)
+    """
 
     if doctype and docname:
         frappe.has_permission(doctype, "write", doc=docname, throw=True)
@@ -31,6 +45,17 @@ def process_photo(file_url, crop_x=0, crop_y=0, crop_width=0, crop_height=0,
     rotate = int(float(rotate))
     resize_width = int(float(resize_width))
     resize_height = int(float(resize_height))
+    flip_h = int(float(flip_h))
+    flip_v = int(float(flip_v))
+    brightness = float(brightness)
+    contrast = float(contrast)
+    sharpness = float(sharpness)
+    saturation = float(saturation)
+    blur = float(blur)
+    auto_enhance = int(float(auto_enhance))
+    grayscale = int(float(grayscale))
+    sepia = int(float(sepia))
+    invert = int(float(invert))
 
     # Resolve file path
     file_path = resolve_file_path(file_url)
@@ -50,16 +75,21 @@ def process_photo(file_url, crop_x=0, crop_y=0, crop_width=0, crop_height=0,
     # Process image
     img = Image.open(file_path)
 
-    # Normalize EXIF orientation (critical for phone photos)
+    # 1. Normalize EXIF orientation (critical for phone photos)
     img = ImageOps.exif_transpose(img)
 
-    # 1. Rotate (Cropper.js uses clockwise-positive, Pillow counter-clockwise)
+    # 2. Rotate (Cropper.js uses clockwise-positive, Pillow counter-clockwise)
     if rotate:
         img = img.rotate(-rotate, expand=True)
 
-    # 2. Crop
+    # 3. Flip
+    if flip_h:
+        img = img.transpose(Image.FLIP_LEFT_RIGHT)
+    if flip_v:
+        img = img.transpose(Image.FLIP_TOP_BOTTOM)
+
+    # 4. Crop
     if crop_width > 0 and crop_height > 0:
-        # Clamp to image bounds
         img_w, img_h = img.size
         x1 = max(0, crop_x)
         y1 = max(0, crop_y)
@@ -68,7 +98,7 @@ def process_photo(file_url, crop_x=0, crop_y=0, crop_width=0, crop_height=0,
         if x2 > x1 and y2 > y1:
             img = img.crop((x1, y1, x2, y2))
 
-    # 3. Resize
+    # 5. Resize
     if resize_width > 0 or resize_height > 0:
         orig_w, orig_h = img.size
         if resize_width > 0 and resize_height > 0:
@@ -81,6 +111,76 @@ def process_photo(file_url, crop_x=0, crop_y=0, crop_width=0, crop_height=0,
             new_size = (int(orig_w * ratio), resize_height)
         img = img.resize(new_size, Image.LANCZOS)
 
+    # Ensure RGB mode for enhancement operations
+    if img.mode == "P":
+        img = img.convert("RGBA")
+
+    # 6. Enhancements (only apply if not default 1.0)
+    if abs(brightness - 1.0) > 0.01:
+        img = ImageEnhance.Brightness(img).enhance(brightness)
+
+    if abs(contrast - 1.0) > 0.01:
+        img = ImageEnhance.Contrast(img).enhance(contrast)
+
+    if abs(sharpness - 1.0) > 0.01:
+        img = ImageEnhance.Sharpness(img).enhance(sharpness)
+
+    if abs(saturation - 1.0) > 0.01:
+        img = ImageEnhance.Color(img).enhance(saturation)
+
+    # 7. Blur
+    if blur > 0:
+        img = img.filter(ImageFilter.GaussianBlur(radius=blur))
+
+    # 8. Filters
+    if auto_enhance:
+        if img.mode == "RGBA":
+            # autocontrast doesn't work on RGBA, split and process RGB
+            r, g, b, a = img.split()
+            rgb = Image.merge("RGB", (r, g, b))
+            rgb = ImageOps.autocontrast(rgb, cutoff=1)
+            r2, g2, b2 = rgb.split()
+            img = Image.merge("RGBA", (r2, g2, b2, a))
+        else:
+            img = ImageOps.autocontrast(img, cutoff=1)
+
+    if grayscale:
+        if img.mode == "RGBA":
+            r, g, b, a = img.split()
+            gray = img.convert("L")
+            img = Image.merge("RGBA", (gray, gray, gray, a))
+        else:
+            img = ImageOps.grayscale(img)
+            img = img.convert("RGB")
+
+    if sepia:
+        # Apply sepia tone
+        if img.mode == "RGBA":
+            r, g, b, a = img.split()
+            gray = img.convert("L")
+            sepia_r = gray.point(lambda x: min(255, int(x * 1.2 + 40)))
+            sepia_g = gray.point(lambda x: min(255, int(x * 1.0 + 20)))
+            sepia_b = gray.point(lambda x: min(255, int(x * 0.8)))
+            img = Image.merge("RGBA", (sepia_r, sepia_g, sepia_b, a))
+        else:
+            gray = ImageOps.grayscale(img)
+            sepia_r = gray.point(lambda x: min(255, int(x * 1.2 + 40)))
+            sepia_g = gray.point(lambda x: min(255, int(x * 1.0 + 20)))
+            sepia_b = gray.point(lambda x: min(255, int(x * 0.8)))
+            img = Image.merge("RGB", (sepia_r, sepia_g, sepia_b))
+
+    if invert:
+        if img.mode == "RGBA":
+            r, g, b, a = img.split()
+            rgb = Image.merge("RGB", (r, g, b))
+            rgb = ImageOps.invert(rgb)
+            r2, g2, b2 = rgb.split()
+            img = Image.merge("RGBA", (r2, g2, b2, a))
+        else:
+            if img.mode != "RGB":
+                img = img.convert("RGB")
+            img = ImageOps.invert(img)
+
     # Determine output format (HEIC -> JPEG)
     out_ext = ext
     if ext in (".heic", ".heif"):
@@ -88,11 +188,12 @@ def process_photo(file_url, crop_x=0, crop_y=0, crop_width=0, crop_height=0,
 
     # Convert RGBA to RGB for JPEG
     if out_ext in (".jpg", ".jpeg") and img.mode == "RGBA":
-        img = img.convert("RGB")
+        bg = Image.new("RGB", img.size, (255, 255, 255))
+        bg.paste(img, mask=img.split()[3])
+        img = bg
 
     # Generate output filename
     original_stem = os.path.splitext(os.path.basename(file_path))[0]
-    # Strip previous _edited_ suffixes
     if "_edited_" in original_stem:
         original_stem = original_stem.split("_edited_")[0]
     timestamp = int(time.time())
@@ -143,7 +244,6 @@ def resolve_file_path(file_url):
         return frappe.get_site_path("public", "files",
                                      file_url.replace("/files/", ""))
     else:
-        # Try looking up via File doctype
         file_doc = frappe.db.get_value("File", {"file_url": file_url},
                                         ["file_url"], as_dict=True)
         if file_doc:
@@ -156,7 +256,6 @@ def cleanup_old_edits(current_url, new_url, doctype, docname):
     if not (doctype and docname):
         return
 
-    # Only clean up if the current file was itself an edit
     if "_edited_" not in (current_url or ""):
         return
 
@@ -171,5 +270,4 @@ def cleanup_old_edits(current_url, new_url, doctype, docname):
             fdoc = frappe.get_doc("File", fname)
             fdoc.delete(ignore_permissions=True)
     except Exception:
-        # Don't fail the edit if cleanup fails
         pass
