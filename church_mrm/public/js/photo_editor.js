@@ -233,16 +233,43 @@ frappe.provide("church_mrm.photo_editor");
     function bind_adjustments(d) {
         var w = d.$wrapper;
 
-        // Slider value display
+        // Slider value display + live CSS preview
         w.find('.pe-adj-item input[type="range"]').on("input", function() {
             var id = $(this).attr("id").replace("pe-", "");
             w.find('.pe-adj-val[data-for="' + id + '"]').text($(this).val());
+            apply_css_preview(d);
         });
 
-        // Filter toggle buttons
+        // Filter toggle buttons with live preview
         w.find(".pe-grayscale, .pe-sepia, .pe-auto-enhance, .pe-invert").on("click", function() {
             $(this).toggleClass("active");
+            apply_css_preview(d);
         });
+    }
+
+    function apply_css_preview(d) {
+        var w = d.$wrapper;
+        var brightness = parseFloat(w.find("#pe-brightness").val()) || 1;
+        var contrast = parseFloat(w.find("#pe-contrast").val()) || 1;
+        var saturation = parseFloat(w.find("#pe-saturation").val()) || 1;
+        var blur = parseFloat(w.find("#pe-blur").val()) || 0;
+        var grayscale = w.find(".pe-grayscale").hasClass("active") ? 1 : 0;
+        var sepia = w.find(".pe-sepia").hasClass("active") ? 1 : 0;
+        var invert = w.find(".pe-invert").hasClass("active") ? 1 : 0;
+
+        var filters = [];
+        if (brightness !== 1) filters.push("brightness(" + brightness + ")");
+        if (contrast !== 1) filters.push("contrast(" + contrast + ")");
+        if (saturation !== 1) filters.push("saturate(" + saturation + ")");
+        if (blur > 0) filters.push("blur(" + blur + "px)");
+        if (grayscale) filters.push("grayscale(1)");
+        if (sepia) filters.push("sepia(1)");
+        if (invert) filters.push("invert(1)");
+
+        var filterStr = filters.length > 0 ? filters.join(" ") : "none";
+
+        // Apply to Cropper.js canvas and view-box images
+        w.find(".cropper-canvas img, .cropper-view-box img").css("filter", filterStr);
     }
 
     function reset_adjustments(d) {
@@ -253,6 +280,8 @@ frappe.provide("church_mrm.photo_editor");
             w.find('.pe-adj-val[data-for="' + k + '"]').text(defaults[k]);
         }
         w.find(".pe-grayscale, .pe-sepia, .pe-auto-enhance, .pe-invert").removeClass("active");
+        // Clear CSS filter preview
+        w.find(".cropper-canvas img, .cropper-view-box img").css("filter", "none");
     }
 
     function reload_image(d, url) {
