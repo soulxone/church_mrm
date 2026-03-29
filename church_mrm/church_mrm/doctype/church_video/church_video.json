@@ -1,0 +1,125 @@
+{
+  "actions": [],
+  "autoname": "field:title",
+  "creation": "2026-03-28 21:00:00.000000",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "field_order": [
+    "youtube_url",
+    "video_id",
+    "column_break_1",
+    "title",
+    "thumbnail_url",
+    "section_break_details",
+    "description",
+    "section_break_publishing",
+    "category",
+    "column_break_2",
+    "is_published",
+    "published_date"
+  ],
+  "fields": [
+    {
+      "fieldname": "youtube_url",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "YouTube URL",
+      "reqd": 1
+    },
+    {
+      "fieldname": "video_id",
+      "fieldtype": "Data",
+      "in_list_view": 0,
+      "label": "Video ID",
+      "read_only": 1
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "title",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Title",
+      "reqd": 1
+    },
+    {
+      "fieldname": "thumbnail_url",
+      "fieldtype": "Data",
+      "label": "Thumbnail URL",
+      "read_only": 1
+    },
+    {
+      "fieldname": "section_break_details",
+      "fieldtype": "Section Break",
+      "label": "Details"
+    },
+    {
+      "fieldname": "description",
+      "fieldtype": "Text Editor",
+      "label": "Description"
+    },
+    {
+      "fieldname": "section_break_publishing",
+      "fieldtype": "Section Break",
+      "label": "Publishing"
+    },
+    {
+      "default": "Sermon",
+      "fieldname": "category",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "label": "Category",
+      "options": "Sermon\nWorship\nTeaching\nTestimony\nEvent\nOther"
+    },
+    {
+      "fieldname": "column_break_2",
+      "fieldtype": "Column Break"
+    },
+    {
+      "default": "1",
+      "fieldname": "is_published",
+      "fieldtype": "Check",
+      "in_list_view": 1,
+      "label": "Published"
+    },
+    {
+      "default": "Today",
+      "fieldname": "published_date",
+      "fieldtype": "Date",
+      "label": "Published Date"
+    }
+  ],
+  "image_field": "thumbnail_url",
+  "index_web_pages_for_search": 0,
+  "links": [],
+  "modified": "2026-03-28 21:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "Church MRM",
+  "name": "Church Video",
+  "naming_rule": "By fieldname",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "read": 1,
+      "role": "All"
+    }
+  ],
+  "sort_field": "published_date",
+  "sort_order": "DESC",
+  "states": [],
+  "track_changes": 1
+}
