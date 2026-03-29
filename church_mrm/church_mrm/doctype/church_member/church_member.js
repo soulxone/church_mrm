@@ -5,6 +5,11 @@ frappe.ui.form.on("Church Member", {
                 frappe.set_route("Form", "Contact", frm.doc.contact);
             });
         }
+        if (!frm.is_new() && frm.doc.image) {
+            frm.add_custom_button(__("Edit Photo"), function() {
+                church_mrm.photo_editor.open(frm);
+            });
+        }
         if (!frm.is_new()) {
             frm.add_custom_button(__("New Donation"), function() {
                 frappe.new_doc("Donation", {

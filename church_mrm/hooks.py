@@ -14,8 +14,14 @@ app_icon_color = "#FFFFFF"
 after_install = "church_mrm.install.after_install"
 
 # Include CSS and JS in all pages
-app_include_css = "/assets/church_mrm/css/church_mrm.css"
-app_include_js = "/assets/church_mrm/js/church_mrm.js"
+app_include_css = [
+    "/assets/church_mrm/css/church_mrm.css",
+    "/assets/church_mrm/css/photo_editor.css"
+]
+app_include_js = [
+    "/assets/church_mrm/js/church_mrm.js",
+    "/assets/church_mrm/js/photo_editor.js"
+]
 
 # Include JS on website portal pages
 web_include_js = "/assets/church_mrm/js/website.js"
