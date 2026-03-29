@@ -63,6 +63,15 @@ frappe.provide("church_mrm.photo_editor");
 
         var html = '<div class="photo-editor-wrapper">' +
             '<div class="photo-editor-toolbar">' +
+                '<button class="btn btn-default btn-sm pe-move" title="' + __("Move") + '">' +
+                    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 9l-3 3 3 3"/><path d="M9 5l3-3 3 3"/><path d="M15 19l-3 3-3-3"/><path d="M19 9l3 3-3 3"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/></svg> ' +
+                    __("Move") +
+                '</button>' +
+                '<button class="btn btn-default btn-sm pe-crop active" title="' + __("Crop") + '">' +
+                    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/></svg> ' +
+                    __("Crop") +
+                '</button>' +
+                '<span class="pe-separator"></span>' +
                 '<button class="btn btn-default btn-sm pe-rotate-left" title="' + __("Rotate Left") + '">' +
                     '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg> ' +
                     __("Rotate Left") +
@@ -120,7 +129,18 @@ frappe.provide("church_mrm.photo_editor");
 
             d._cropper = cropper;
 
-            // Toolbar buttons
+            // Toolbar buttons - Move/Crop toggle
+            d.$wrapper.find(".pe-move").on("click", function() {
+                cropper.setDragMode("move");
+                d.$wrapper.find(".pe-move").addClass("active");
+                d.$wrapper.find(".pe-crop").removeClass("active");
+            });
+            d.$wrapper.find(".pe-crop").on("click", function() {
+                cropper.setDragMode("crop");
+                d.$wrapper.find(".pe-crop").addClass("active");
+                d.$wrapper.find(".pe-move").removeClass("active");
+            });
+
             d.$wrapper.find(".pe-rotate-left").on("click", function() {
                 cropper.rotate(-90);
             });

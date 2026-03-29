@@ -15,6 +15,22 @@
     margin-right: 2px;
 }
 
+.photo-editor-toolbar .btn.active {
+    background-color: var(--primary, #4ABFAB);
+    color: #fff;
+    border-color: var(--primary, #4ABFAB);
+}
+
+.photo-editor-toolbar .btn.active svg {
+    stroke: #fff;
+}
+
+.photo-editor-toolbar .pe-separator {
+    width: 1px;
+    background: var(--border-color, #d1d8dd);
+    margin: 2px 4px;
+}
+
 .photo-editor-container {
     max-height: 450px;
     overflow: hidden;
