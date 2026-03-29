@@ -1,0 +1,199 @@
+{% extends "templates/web.html" %}
+
+{% block head_include %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.3.0/css/glightbox.min.css">
+<style>
+:root {
+    --mint: #4ABFAB;
+    --mint-dark: #3a9e8a;
+    --blue: #6BB8D4;
+    --grey-bg: #F4F6F8;
+}
+
+.gallery-hero {
+    background: linear-gradient(135deg, var(--mint-dark) 0%, var(--mint) 50%, var(--blue) 100%);
+    padding: 50px 20px;
+    text-align: center;
+    color: white;
+    margin-bottom: 30px;
+}
+
+.gallery-hero h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin: 0 0 8px;
+}
+
+.gallery-hero p {
+    color: #d6f0eb;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.gallery-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 24px;
+    padding: 0 16px;
+}
+
+.gallery-filter {
+    padding: 6px 18px;
+    border-radius: 20px;
+    border: 2px solid var(--mint);
+    background: transparent;
+    color: var(--mint-dark);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.gallery-filter:hover {
+    background: var(--grey-bg);
+}
+
+.gallery-filter.active {
+    background: linear-gradient(135deg, var(--mint-dark), var(--mint));
+    color: #fff;
+    border-color: var(--mint-dark);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    padding: 0 16px;
+    max-width: 1200px;
+    margin: 0 auto 40px;
+}
+
+.gallery-item {
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.gallery-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+}
+
+.gallery-caption {
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    color: #555;
+    min-height: 20px;
+}
+
+.gallery-caption .cat-badge {
+    display: inline-block;
+    background: var(--grey-bg);
+    color: var(--mint-dark);
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-bottom: 4px;
+}
+
+.gallery-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+}
+
+.gallery-empty svg {
+    width: 60px;
+    height: 60px;
+    stroke: #ccc;
+    margin-bottom: 16px;
+}
+</style>
+{% endblock %}
+
+{% block page_content %}
+<div class="gallery-hero">
+    <h1>Photo Gallery</h1>
+    <p>Moments from our church family</p>
+</div>
+
+{% if photos %}
+<!-- Category Filters -->
+{% if categories | length > 0 %}
+<div class="gallery-filters">
+    <button class="gallery-filter active" data-filter="all">All</button>
+    {% for cat in categories %}
+    <button class="gallery-filter" data-filter="{{ cat.category_name }}">{{ cat.category_name }}</button>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Photo Grid -->
+<div class="gallery-grid">
+    {% for photo in photos %}
+    <div class="gallery-item" data-category="{{ photo.category or '' }}">
+        <a href="{{ photo.image }}" class="glightbox"
+           data-glightbox="title: {{ photo.caption or '' }}; description: {{ photo.category or '' }}">
+            <img src="{{ photo.image }}" alt="{{ photo.caption or 'Gallery photo' }}" loading="lazy">
+        </a>
+        <div class="gallery-caption">
+            {% if photo.category %}
+            <span class="cat-badge">{{ photo.category }}</span>
+            {% endif %}
+            {% if photo.caption %}
+            <div>{{ photo.caption }}</div>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% else %}
+<div class="gallery-empty">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+        <circle cx="8.5" cy="8.5" r="1.5"/>
+        <polyline points="21 15 16 10 5 21"/>
+    </svg>
+    <h3>No photos yet</h3>
+    <p>Check back soon for photos from our church family.</p>
+</div>
+{% endif %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.3.0/js/glightbox.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var lightbox = GLightbox({ selector: '.glightbox', touchNavigation: true, loop: true });
+
+    // Category filtering
+    document.querySelectorAll('.gallery-filter').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.gallery-filter').forEach(function(b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            var filter = btn.getAttribute('data-filter');
+            document.querySelectorAll('.gallery-item').forEach(function(item) {
+                if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            lightbox.reload();
+        });
+    });
+});
+</script>
+{% endblock %}

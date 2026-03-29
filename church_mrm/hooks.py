@@ -85,6 +85,7 @@ website_route_rules = [
     {"from_route": "/expense-scanner", "to_route": "expense_scanner"},
     {"from_route": "/origins", "to_route": "origins"},
     {"from_route": "/events/detail", "to_route": "events/detail"},
+    {"from_route": "/gallery", "to_route": "gallery"},
 ]
 
 # Website context for portal
